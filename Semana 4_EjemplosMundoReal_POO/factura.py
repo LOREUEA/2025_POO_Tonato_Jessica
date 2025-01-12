@@ -48,6 +48,7 @@ factura3.asignar_iva(iva2)
 print(factura1, end="\n\n")
 print(factura2, end="\n\n")
 print(factura3, end="\n\n")
+print('Gracias por tu compra 😉, vuelve pronto. \n\n')
 
 #Forma 2: Carrito de compras
 # Clase Producto que representa un artículo individual
@@ -92,7 +93,7 @@ class Factura:
 
 # Ejemplo de uso
 # Crear productos
-producto1 = Producto("Leche Deslactosada", 1.06, 0.10)
+producto1 = Producto("Leche Deslactosada", 1.06, 0.00)
 producto2 = Producto("Sal Crisal", 0.53, 0.00)
 producto3 = Producto("Cereal Chocapic", 7.16, 1.07)
 
@@ -104,3 +105,4 @@ factura.agregar_producto(producto3)
 
 # Imprimir factura con el total general
 print(factura)
+print('Mantenemos los mejores precios del mercado 😊, vuelve pronto. \n\n')
