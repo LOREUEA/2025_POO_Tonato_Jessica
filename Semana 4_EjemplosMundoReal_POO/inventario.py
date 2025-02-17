@@ -1,17 +1,19 @@
-# Crearemos un inventario usando el método PEPS
 
-# Creamos la clase Producto
+
 class Producto:
     def __init__(self, nombre, precio, fecha_ingreso, cantidad):
         self.nombre = nombre  # Asignaremos un nombre del producto
         self.precio = precio  # Asignaremos un precio por unidad
         self.fecha_ingreso = fecha_ingreso  # Registraremos la fecha de ingreso al inventario
         self.cantidad = cantidad  # Cantidad disponible
+        # Crearemos un inventario usando el método PEPS
+
 
     def __str__(self):
         # Representación en texto del producto
         return (f'Producto: {self.nombre}, Precio: $ {self.precio:.2f}, '
                 f'Fecha Ingreso: {self.fecha_ingreso}, Cantidad: {self.cantidad}')
+# Creamos la clase Producto
 
 
 # Creamos la clase Inventario
