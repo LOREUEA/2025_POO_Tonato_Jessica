@@ -1,65 +1,76 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
-# Crear la ventana principal
+# Crear ventana principal
 app = tk.Tk()
-app.geometry('500x400')  # Ajuste de tamaño
-app.configure(background='black')
-app.title('Benvenid@ 🤗')
+app.title("📋 Tu Lista de Tareas 📋")
+app.geometry("450x400")
+app.configure(bg="#598392")  # Color de fondo principal
 
-# Botón de prueba
-tk.Button(
-    app,
-    text='Dale click 🖱️',
-    font=('Calibri', 14),
-    bg='#0d1b2a',
-    fg='white',
-    command=lambda: print('¿Qué tal tu día 🫣')
-).pack(fill=tk.BOTH, expand=True)
+# **Título con nueva fuente y color**
+titulo = tk.Label(app, text="📌 ¡Organiza tus Tareas! 📌",
+                  font=("Comic Sans MS", 14, "bold"), bg="#598392", fg="white")
+titulo.pack(pady=5)
 
-# Crear menú
-barra_menu = tk.Menu(app)
-app.config(menu=barra_menu)
-menu_archivo = tk.Menu(barra_menu)
-barra_menu.add_cascade(label='Archivo', menu=menu_archivo)
-menu_archivo.add_command(label='Salir', command=app.quit)
+# **Campo de entrada**
+tk.Label(app, text="Nueva Tarea:", font=("Comic Sans MS", 10), bg="#598392", fg="white").pack()
+entrada_tarea = tk.Entry(app, width=40, font=("Comic Sans MS", 10))
+entrada_tarea.pack(pady=5)
 
-# Crear título
-titulo = tk.Label(app, text='Ingresa tus datos', font=('Arial', 12), bg='black', fg='white')
-titulo.pack(pady=10)
+# **Función para agregar tarea**
+def agregar_tarea():
+    tarea = entrada_tarea.get()
+    if tarea.strip() == "":
+        messagebox.showwarning("⚠️ Atención", "Por favor, ingresa una tarea.")
+        return
+    tabla.insert("", "end", values=(tarea,))
+    entrada_tarea.delete(0, tk.END)
 
-# Crear etiquetas y campos de entrada
-tk.Label(app, text='Ingresa tus nombres:', bg='black', fg='white').pack()
-entrada_nombre = tk.Entry(app)
-entrada_nombre.pack()
+# **Función para eliminar tarea seleccionada**
+def eliminar_tarea():
+    seleccionado = tabla.selection()
+    if not seleccionado:
+        messagebox.showwarning("⚠️ Atención", "Selecciona una tarea para eliminar.")
+        return
+    tabla.delete(seleccionado)
 
-tk.Label(app, text='Ingresa tus apellidos:', bg='black', fg='white').pack()
-entrada_apellido = tk.Entry(app)
-entrada_apellido.pack()
+# **Función para limpiar todas las tareas**
+def limpiar_todo():
+    confirmacion = messagebox.askyesno("⚠️ Confirmar", "¿Deseas eliminar TODAS las tareas?")
+    if confirmacion:
+        for item in tabla.get_children():
+            tabla.delete(item)
 
-tk.Label(app, text='Ingresa tu correo:', bg='black', fg='white').pack()
-entrada_correo = tk.Entry(app)
-entrada_correo.pack()
+# **Marco para los botones con nuevo color**
+frame_botones = tk.Frame(app, bg="#aec3b0")
+frame_botones.pack(pady=5, fill=tk.X)
 
+# **Botones con nuevos colores y fuente Comic Sans**
+btn_agregar = tk.Button(frame_botones, text="✅ Agregar", command=agregar_tarea, bg="#2E8B57", fg="white",
+                        font=("Comic Sans MS", 10, "bold"))
+btn_agregar.grid(row=0, column=0, padx=5, pady=5)
 
+btn_eliminar = tk.Button(frame_botones, text="❌ Eliminar", command=eliminar_tarea, bg="#B22222", fg="white",
+                         font=("Comic Sans MS", 10, "bold"))
+btn_eliminar.grid(row=0, column=1, padx=5, pady=5)
 
+btn_limpiar = tk.Button(frame_botones, text="🗑️ Limpiar Todo", command=limpiar_todo, bg="#8B0000", fg="white",
+                        font=("Comic Sans MS", 10, "bold"))
+btn_limpiar.grid(row=0, column=2, padx=5, pady=5)
 
+btn_salir = tk.Button(frame_botones, text="🚪 Salir", command=app.quit, bg="black", fg="white",
+                      font=("Comic Sans MS", 10, "bold"))
+btn_salir.grid(row=0, column=3, padx=5, pady=5)
 
+# **Tabla para mostrar las tareas con color personalizado**
+style = ttk.Style()
+style.configure("Treeview", background="#aec3b0", font=("Comic Sans MS", 10))
+style.configure("Treeview.Heading", font=("Comic Sans MS", 10, "bold"))
 
-tabla = (ttk.Treeview(app, columns=('nombre', 'apellido', 'correo')))
-tabla.heading('nombre', text='Nombre ✍️')
-tabla.heading('apellido', text='Apellido ✍️')
-tabla.heading('correo', text='Correo ✍️')
-tabla.column('nombre', width=25, anchor='center')
-tabla.column('apellido', width=25, anchor='center')
-tabla.column('correo', width=25, anchor='center')
+tabla = ttk.Treeview(app, columns=("Tarea"), show="headings")
+tabla.heading("Tarea", text="📌 Tareas Pendientes")
+tabla.column("Tarea", width=350, anchor="center")
+tabla.pack(pady=10, fill=tk.BOTH, expand=True)
 
-
-
-
-
-
-
-
+# **Ejecutar la aplicación**
 app.mainloop()
-
