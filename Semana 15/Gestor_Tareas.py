@@ -10,7 +10,7 @@ class GestorTareasElegante:
 
         self.fuente = ("Segoe UI", 10)
 
-        # 🎨 Estilos de botones
+        # Estilos de botones
         style = ttk.Style()
         style.theme_use("clam")
 
