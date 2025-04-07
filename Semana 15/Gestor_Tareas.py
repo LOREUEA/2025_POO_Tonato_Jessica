@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-class GestorTareasElegante:
-    def _init(self, root):  # CORREGIDO: __init_
+class GestorTareas:
+    def _init(self, root):
         self.root = root
         self.root.title("Gestor de Tareas")
         self.root.configure(bg="#f4f4f4")
@@ -106,7 +106,7 @@ class GestorTareasElegante:
             self.tree.delete(item)
 
 # Ejecutar la app
-if _name_ == "_main":  # CORREGIDO: "main_"
+if _name_ == "_main":
     root = tk.Tk()
-    app = GestorTareasElegante(root)
+    app = GestorTareas(root)
     root.mainloop()
