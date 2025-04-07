@@ -4,8 +4,9 @@ from tkinter import messagebox
 class TaskApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Gestor de Tareas")
-        self.root.geometry("400x400")
+        self.root.title("🗂️ Gestor de Tareas")
+        self.root.geometry("460x450")
+        self.root.configure(bg="#202124")
         self.root.bind("<Return>", self.add_task_event)
         self.root.bind("<Escape>", lambda e: root.quit())
         self.root.bind("<c>", self.complete_task_event)
@@ -14,22 +15,30 @@ class TaskApp:
 
         self.tasks = []
 
-        # Campo de entrada
-        self.entry = tk.Entry(root, font=("Arial", 12))
-        self.entry.pack(pady=10)
+        # Entrada
+        self.entry = tk.Entry(root, font=("Arial", 14), bg="#303134", fg="#f1f3f4", insertbackground="#f1f3f4")
+        self.entry.pack(pady=15, padx=10, fill="x")
         self.entry.focus()
 
         # Botones
-        self.button_frame = tk.Frame(root)
-        self.button_frame.pack()
+        self.button_frame = tk.Frame(root, bg="#202124")
+        self.button_frame.pack(pady=5)
 
-        tk.Button(self.button_frame, text="Añadir", command=self.add_task).grid(row=0, column=0, padx=5)
-        tk.Button(self.button_frame, text="Completar", command=self.complete_task).grid(row=0, column=1, padx=5)
-        tk.Button(self.button_frame, text="Eliminar", command=self.delete_task).grid(row=0, column=2, padx=5)
+        tk.Button(self.button_frame, text="➕ Añadir", command=self.add_task,
+                  font=("Arial", 12), bg="#5f6368", fg="white", width=12).grid(row=0, column=0, padx=5)
+        tk.Button(self.button_frame, text="✅ Completar", command=self.complete_task,
+                  font=("Arial", 12), bg="#188038", fg="white", width=12).grid(row=0, column=1, padx=5)
+        tk.Button(self.button_frame, text="🗑️ Eliminar", command=self.delete_task,
+                  font=("Arial", 12), bg="#d93025", fg="white", width=12).grid(row=0, column=2, padx=5)
 
         # Lista de tareas
-        self.listbox = tk.Listbox(root, width=50, font=("Arial", 12))
-        self.listbox.pack(pady=10)
+        self.listbox = tk.Listbox(root, width=50, height=15, font=("Arial", 13),
+                                  bg="#303134", fg="#f1f3f4", selectbackground="#5f6368", selectforeground="white")
+        self.listbox.pack(pady=15)
+
+        # Instrucciones rápidas
+        instrucciones = "↩️ Enter: Añadir  |  ✅ C: Completar  |  🗑️ D/Delete: Eliminar  |  ❌ Esc: Salir"
+        tk.Label(root, text=instrucciones, font=("Arial", 10), fg="#9aa0a6", bg="#202124").pack(pady=5)
 
     def add_task(self):
         task = self.entry.get().strip()
@@ -64,12 +73,10 @@ class TaskApp:
     def refresh_list(self):
         self.listbox.delete(0, tk.END)
         for task in self.tasks:
-            text = task["text"]
-            if task["done"]:
-                text += " ✔️"
+            text = f"✅ {task['text']}" if task["done"] else f"🔲 {task['text']}"
             self.listbox.insert(tk.END, text)
 
-# Ejecutar aplicación
+# Ejecutar la aplicación
 if __name__ == "__main__":
     root = tk.Tk()
     app = TaskApp(root)
